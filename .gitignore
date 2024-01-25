@@ -1,0 +1,13 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore PhpStorm files
+.idea/
+
+# Ignore Composer related files
+vendor/
+composer.lock
+
+# Ignore environment variables
+.env
