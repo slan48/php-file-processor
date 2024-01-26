@@ -15,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
   $fileProcessor = new FileProcessor();
   try {
     $data = $fileProcessor->processFile($filename);
+
+    if (empty($data)) {
+      throw new Exception('No data found in file');
+    }
   } catch (Exception $e) {
     $error = $e->getMessage();
   }
