@@ -11,3 +11,6 @@ composer.lock
 
 # Ignore environment variables
 .env
+
+uploads/*
+!uploads/.gitkeep
