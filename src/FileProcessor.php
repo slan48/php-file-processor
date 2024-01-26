@@ -18,24 +18,36 @@ class FileProcessor
     $csvData = $this->readCSV($filename);
 
     if (empty($csvData)) {
-      return null; // Handle empty file
+      return null;
     }
 
     foreach ($csvData as $row) {
-      // Implement your logic to calculate totals and profit margins per row
-      $qty = (int)$row['qty'];
-      $cost = (float)$row['cost'];
-      $price = (float)$row['price'];
+      $sku = $row['sku'] ?? null;
+      if (empty($sku)) {
+        return throw new \Exception('SKU is required');
+      }
+
+      $qty = (int)$row['qty'] ?? null;
+      if (empty($qty)) {
+        return throw new \Exception('Quantity is required');
+      }
+
+      $cost = (float)$row['cost'] ?? null;
+      if (empty($cost)) {
+        return throw new \Exception('Cost is required');
+      }
+
+      $price = (float)$row['price'] ?? null;
+      if (empty($price)) {
+        return throw new \Exception('Price is required');
+      }
 
       $profitMargin = ($price - $cost) / $cost * 100;
       $totalProfitUSD = $qty * ($price - $cost);
-
-      // Convert total profit to CAD (assuming you have a CurrencyConverter class)
       $totalProfitCAD = $this->convertToCAD($totalProfitUSD);
 
-      // Store the results for each row
       $this->data[] = array(
-        'sku' => $row['sku'],
+        'sku' => $sku,
         'cost' => $cost,
         'price' => $price,
         'qty' => $qty,
